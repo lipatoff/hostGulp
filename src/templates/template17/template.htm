@@ -1,0 +1,80 @@
+<?php 
+	function upcache($file){return $file.'?'.filemtime('.'.$file);} //Обновление кэш, если файл изменен
+	$htmlcompress=false;
+	ob_start();
+?>
+<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+	<title><?php Core_Page::instance()->showTitle()?></title>
+	<meta name="description" content="<?php Core_Page::instance()->showDescription()?>"/>
+	<meta name="keywords" content="<?php Core_Page::instance()->showKeywords()?>"/>
+	<meta content="text/html; charset=<?php echo SITE_CODING?>" http-equiv="Content-Type"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="apple-mobile-web-app-capable" content="yes">
+	<?php /* <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/> */ ?>
+	<link rel="stylesheet" href="/fonts/fonts_woff2.css" /><link rel="stylesheet" href="<?=upcache('/css/404.css')?>" />
+</head>
+<body class="page404">
+
+<main class="main">
+	<div class="container">
+		<?php Core_Page::instance()->execute(); ?>
+	</div>
+
+	<nav>
+	<div class="container nav__container">
+		<?php // Верхнее меню
+			$url_er = str_replace('?' . $_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']);
+			$url_er = preg_replace('/\/page-[0-9].*/', '/', $url_er).'_';
+
+
+			$Structure_Controller_Show = new Structure_Controller_Show(Core_Entity::factory('Site', CURRENT_SITE));
+			
+			//$url_arr = explode('/', substr($url_er, 1));
+
+			$Structure_Controller_Show->addEntity(Core::factory('Core_Xml_Entity')->name('url_er')->value($url_er));
+
+			$Structure_Controller_Show->structure()->queryBuilder()
+				->where('active', '=', 1)
+				->where('indexing', '=', 1)
+				->where('show', '=', 1)
+				//->having('path', 'IN', $url_arr)
+				;
+
+			$Structure_Controller_Show->xsl('Меню404')
+				->showInformationsystemGroups(TRUE)
+				->showInformationsystemItems(TRUE)
+				->showShopGroups(TRUE)
+				->showShopItems(TRUE)
+				->forbiddenTags(array('seo_title','seo_description','seo_keywords','dir','description','text'))
+				->menu('3')->show();
+		?>
+	</div>
+	</nav>
+</main>
+
+<footer class="footer">
+<div class="container footer__container">
+	<p class="footer__text">&copy; <?php echo date('Y');?>&nbsp;Название фирмы</p>
+</div>
+</footer>
+
+<script src="<?=upcache('/js/before.js')?>"></script>
+<script src="https://yastatic.net/jquery/3.1.1/jquery.min.js"></script>
+<script src="<?=upcache('/js/libs.min.js')?>"></script>
+<script src="<?=upcache('/js/script.js')?>"></script>
+
+<link rel="stylesheet" href="<?=upcache('/css/libs.min.css')?>" />
+
+<a href="http://www.hostcms.ru" class="hide">Система управления сайтом HostCMS</a>
+</body>
+</html>
+<?php
+	$content = ob_get_contents(); ob_end_clean();
+	//Если вкл. сжатие
+	if ($htmlcompress){
+		preg_match_all('!(<(?:code|pre|script).*>[^<]+</(?:code|pre|script)>)!',$content,$pre); $content = preg_replace('!<(?:code|pre).*>[^<]+</(?:code|pre)>!', '#pre#', $content); $content = preg_replace('#<!–[^\[].+–>#', '', $content); $content = preg_replace('/[\r\n\t]+/', ' ', $content); $content = preg_replace('/>[\s]+</', '><', $content); $content = preg_replace('/[\s]+/', ' ', $content);if (!empty($pre[0])) {foreach ($pre[0] as $tag) {$content = preg_replace('!#pre#!', $tag, $content,1);}}
+		}
+
+	echo $content;
+?>

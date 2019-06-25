@@ -1,0 +1,85 @@
+<article>
+<section>
+<div class="container">
+	<div class="imgblock">
+	<?php
+		for($i = 0; $i < 6; $i++)
+		{
+			$w = rand(3,10) * 100;
+			$h = rand(3,10) * 100;
+		
+			?><a href="#" class="imgblock__item" data-img="<?php echo $w.'x'.$h,'x1'; ?>"><img data-src="https://source.unsplash.com/<?php echo $w.'x'.$h; ?>/?sig=<?php echo $i; ?>" width="<?php echo $w; ?>" height="<?php echo $h; ?>" class="imgblock__img"></a><?php 
+
+			//<a href="#" class="imgblock__item" data-img="300x500"><img data-src="https://source.unsplash.com/300x500/?sig=" width="300" height="500" class="imgblock__img"></a>
+		} 
+	?>
+	</div>
+</div>
+</section>
+
+<section>
+<div class="container">
+	<?php
+	$structure_id = CURRENT_STRUCTURE_ID; // ID текущего узла струкутры
+	$oStructure = Core_Entity::factory('Structure', $structure_id);
+	if ($oStructure->document_id){
+		$oDocument = $oStructure->Document;
+		echo '<h1>' . htmlspecialchars($oDocument->name) . '</h1>';
+	}
+
+	Core_Page::instance()->execute();
+	?>		
+</div>
+</section>
+
+<?php /*
+<section>
+	<div class="container">
+		<?php 
+		$oDoc=Core_Entity::factory('Document', '12');
+		echo '<h3 class="h1">' . htmlspecialchars($oDoc->name) . '</h3>';	
+		$oDoc->Document_Versions->getCurrent()->execute();
+		?>
+	</div>
+</section>
+*/ ?>
+
+<?php /*Каталог*/ ?>
+<?php /*
+<section>
+	<div class="container">
+		<?php
+		$Shop_Controller_Show = new Shop_Controller_Show_L(Core_Entity::factory('Shop', 3));
+		$Shop_Controller_Show->xsl(Core_Entity::factory('Xsl')->getByName('КаталогТоваровСлайдер'));
+
+		$Shop_Controller_Show
+			->shopItems()->queryBuilder()
+			->join('property_value_ints', 'property_value_ints.entity_id', '=', 'shop_items.id')
+			->where('property_value_ints.property_id', '=', 86) // ID доп. свойства
+			->where('property_value_ints.value', '=', 1) // Значение доп. свойства
+			->clearOrderBy()->orderBy('RAND()');
+
+		$Shop_Controller_Show
+			->itemsPropertiesList(FALSE)
+			->calculateTotal(FALSE)
+			->limit(16)
+			->show();
+		?>
+	</div>
+</section>
+*/ ?>
+
+<?php /*Отзывы*/ ?>
+<section>
+<div class="container">
+	<?php
+	$Informationsystem_Controller_Show = new Informationsystem_Controller_Show(Core_Entity::factory('Informationsystem', 16));
+	$Informationsystem_Controller_Show
+		->itemsForbiddenTags(array('description','path','seo_title','seo_description','seo_keywords','dir','showed','guid','datetime','start_datetime','end_datetime'))
+		->xsl('ОтзывыCлайдер')
+		->limit(6)
+		->show();
+	?>
+</div>
+</section>
+</article>

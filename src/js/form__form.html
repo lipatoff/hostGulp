@@ -1,0 +1,72 @@
+<div class="modal__container" id="form1">
+    <label class="modal__close" for="zvonok">&times;</label>
+
+	<form class="form form_mail modal__form">
+		<div class="form__main">
+			<p class="form__title">Обратный звонок</p>  
+			<p class="form__text">Пожалуйста, заполните краткую контактную информацию, и наши сотрудники обязательно свяжутся с Вами</p>			
+			<div class="form__item">
+				<p class="form__label">Имя</p>
+				<input class="form__input form__input_name" name="oname" type="text" required="" minlength="2" maxlength="30"/>
+			</div>
+			<div class="form__item">
+				<p class="form__label">Телефон</p>
+				<input class="form__input" name="otel" type="tel" required=""/>
+			</div>
+			<div class="form__item">
+				<p class="form__label">E-mail</p>
+				<input class="form__input" name="omail" type="email" maxlength="30" />
+			</div>
+			<div class="form__item">
+				<p class="form__label">Комментарий</p>
+				<textarea class="form__input" name="omess" required="" minlength="2" maxlength="100"></textarea>
+			</div>
+			<!--
+			<div class="form__item">
+				<p class="form__label">Пароль</p>
+				<input class="form__input" name="opassword" type="password" required="" minlength="5" maxlength="30"/>
+			</div>
+			<div class="form__item">
+				<p class="form__label">Подтверждение</p>
+				<input class="form__input" name="opassword2" type="password" required="" minlength="5" maxlength="30"/>
+			</div>
+			-->
+			<div class="form__item-submit">
+				<!-- Сюда добавить согласие на обработку -->
+				<input type="submit" class="form__button button" value="Отправить"/>
+			</div>
+
+			<input type="hidden" name="otype" value="1">
+		</div>
+       	<!--
+       	<div class="form__message">
+        	<p class="form__title">Спасибо!</p>
+        	<p class="form__text">Скоро мы свяжемся с Вами!</p>
+        </div>
+        -->
+	</form>
+</div>
+
+<form action="/" class="form" id="revform">
+	<div class="form__main">
+		<p class="form__title">Новый отзыв</p>
+		<!-- <input class="form__input form__input_name" name="author" type="text" required="required" minlength="2" maxlength="30"/> -->
+		<!-- <input class="form__input" name="mail" type="email" required="required" maxlength="40"/> -->
+		<div class="form__item">
+			<p class="form__label">Имя</p>
+			<input class="form__input form__input_name" name="subject" type="text" required="" minlength="2" maxlength="30"/>
+		</div>
+		<div class="form__item">
+			<p class="form__label">Отзыв</p>
+			<textarea class="form__input" name="text" required="" minlength="2" maxlength="1500"></textarea>
+		</div>
+		<div class="form__item-submit">
+			<!-- Сюда добавить согласие на обработку -->
+			<input type="submit" class="form__button button" value="Добавить"/>
+		</div>
+	</div>
+	<div class="form__message">
+		<p class="form__title">Спасибо за отзыв!</p>
+		<p class="form__text">Скоро он появится на сайте!</p>
+	</div>
+</form>

@@ -1,0 +1,104 @@
+//Общий класс для эл-ов ИМ
+.shop
+
+//Количество товара
+.scount
+	position: relative
+	&__input
+		display: block
+	&__error
+		position: absolute
+		left: 0
+		line-height: 16px
+		padding: 0px 8px
+		font-size: 14px
+		color: #fff
+		background-color: $color-red
+		white-space: nowrap
+		word-wrap: normal		
+
+
+//Кнопка в корзину
+.addcart
+	&__added, &__not
+		display: none
+	&_incart &
+		&__form
+			display: none
+		&__added
+			display: block
+
+	&_noactive &
+		&__form
+			display: none
+		&__not
+			display: block
+			
+	&__incart
+		background-color: $color-two
+		&:before
+			content: '\e7ff  '
+			font-family: fontello
+	&__scount
+		display: inline-block
+
+	&__form
+		margin: 0
+
+	&__count
+		padding: 12px 1em 11px
+		border: 1px solid $color-base
+		border-right: 0
+		font: 400 .74rem Arial
+		margin-right: -6px
+
+//Кнопка удалить из корзины
+.delcart
+	&_hide
+		display: none
+		
+
+//Карточка товара
+.card
+	width: 250px
+	border: 1px solid $color-base
+
+	&__img-container
+		+flex-center
+		height: 250px
+	&__img
+		flex-shrink: 0
+		max-height: 100%
+		image-rendering: -webkit-optimize-contrast
+
+	&__description
+		padding: 10px 10px 0 10px
+	&__name
+		display: flex
+		flex-direction: column
+		justify-content: center
+		min-height: 2.8em
+	&__mod
+		line-height: normal
+		position: absolute
+		bottom: 0
+		width: 100%
+		background-color: rgba(0,0,0,.05)
+		color: $color-text
+		margin: 0
+		font-size: 0.8em
+
+
+//Каталог
+$catalog-margin: 7px
+.catalog
+	+flex
+	margin: -$catalog-margin
+	&__item
+		margin: #{$catalog-margin}
+		margin-bottom: #{$margin}
+
+//Товар
+.product
+	&__item
+		max-width: 400px

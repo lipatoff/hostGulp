@@ -1,0 +1,77 @@
+<div class="container">
+
+<?php
+
+/* Фильтр Интернет-магазина */
+if (Core_Registry::instance()->get('filter'))
+{
+	?><aside class="aside"><?php
+$a=microtime(true);
+
+		$Shop_Filter = Core_Registry::instance()->get('filter');
+		$Shop_Filter->show();
+
+		/*
+        $oShop = Core_Entity::factory('Shop', Core_Page::instance()->object->getEntity()->id);
+        $group = Core_Page::instance()->object->group ? intval(Core_Page::instance()->object->group) : 0;
+
+		//Ссылки на группы ИМ
+	        $Shop_Controller_Show = new Shop_Controller_Show_L($oShop);
+
+	        $Shop_Controller_Show->addEntity(Core::factory('Core_Xml_Entity')->name('current_group_id')->value($group));
+	        
+	        $Shop_Controller_Show
+	            ->xsl('МагазинГруппыТоваровФильтр')
+	            ->groupsMode('all')
+	            ->favorite(FALSE)
+	            ->viewed(FALSE)
+	            ->limit(0)
+	            ->show();
+
+	    //Ссылки на производителей
+	        $oShop_Producer_Controller_Show = new Shop_Producer_Controller_Show($oShop);
+	        $oShop_Producer_Controller_Show
+	            ->xsl('МагазинСписокПроизводителейФильтр')
+	            ->limit(6)
+	            ->show();
+
+	    //Облако тегов
+	        $Shop_Controller_Tag_Show = new Shop_Controller_Tag_Show($oShop);
+	        $Shop_Controller_Tag_Show
+	            ->xsl('ОблакоТэговМагазин')
+	            ->group($group)
+	            ->show();
+	    */
+
+$a=round(microtime(true)-$a, 5);
+echo '<div style="z-index:9999999;background-color:green;color:#fff;position: fixed;top: 26px;left: 0;">'.$a.'</div>';
+
+	?></aside><?php
+
+
+}
+?>
+
+<article class="article">
+	<?php
+$a=microtime(true);
+	
+	$Structure_Controller_Breadcrumbs = new Structure_Controller_Breadcrumbs( Core_Entity::factory('Site', CURRENT_SITE) );
+	$Structure_Controller_Breadcrumbs
+		->xsl('ХлебныеКрошки')
+		->show();
+
+	$structure_id = CURRENT_STRUCTURE_ID;
+	$oStructure = Core_Entity::factory('Structure', $structure_id);
+	if ($oStructure->document_id){ 
+		$oDocument = $oStructure->Document;
+		echo '<h1>' . htmlspecialchars($oDocument->name) . '</h1>';
+	}
+
+	Core_Page::instance()->execute();
+
+$a=round(microtime(true)-$a, 5);
+echo '<div style="z-index:9999999;background-color:blue;color:#fff;position: fixed;top: 52px;left: 0;">'.$a.'</div>';	
+	?>
+</article>
+</div>

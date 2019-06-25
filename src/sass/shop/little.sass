@@ -1,0 +1,56 @@
+/*Малые*/
+
+//Корзина товаров
+.little__base_cart:before
+	content: '\267A'
+
+//Сравнение товаров
+.little__base_compare:before
+	content: '\2630'
+
+//Избранное
+.little__base_favorite:before
+	content: '\2661'
+	font-size: 1.1em
+
+
+.little
+	pointer-events: none
+	&_active
+		pointer-events: auto
+	&__base
+		position: relative
+		cursor: default
+		color: $color-grey
+	&_active &__base
+		cursor: pointer
+		color: currentColor
+
+	&__count
+		display: none
+		position: absolute
+		z-index: 1
+		top: -5px
+		right: -5px
+		background-color: $color-base
+		color: #fff
+		font-size: 12px
+		width: 20px
+		line-height: 20px
+		border-radius: 20px
+		box-shadow: 0 0 0 1px $color-light		
+	&_active &__count
+		display: block
+		
+	&__main
+		display: none
+		position: absolute
+		z-index: 2
+		background-color: #fff
+		width: 350px
+		padding: 10px
+		box-shadow: 0 0 5px $color-grey
+		animation: show 0.3s
+	&_active:hover &__main
+		display: block	
+

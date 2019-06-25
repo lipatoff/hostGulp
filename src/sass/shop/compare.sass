@@ -1,0 +1,99 @@
+//Сравнение товаров
+$c-padding: 5px
+.compare
+	&__hideall i
+		+dib
+		width: 15px
+		height: 15px
+		margin: 0 10px 1px 1px
+		box-shadow: 0 0 0 1px currentColor
+		background-color: #fff
+		color: $color-base
+		font-style: normal
+		text-align: center
+		line-height: 14px
+		input:checked+.compare &:before
+			content: '\2714'
+		
+
+.c-card, .c-prop
+	width: 200px
+	flex-shrink: 0
+
+.c-cards
+	display: flex
+	margin-top: 20px
+	-webkit-tap-highlight-color: transparent
+	user-select: none
+
+.c-card
+	&_drag
+		order: 1
+	&_active, &_active~:not(&_drag)
+		order: 2
+	&__drag
+		position: relative
+		width: 200px
+		padding: $c-padding
+		background-color: #fff
+		cursor: grab
+		&:hover, &_move
+			box-shadow: 0 0 1px #aaa
+			z-index: 2
+		&_move
+			position: absolute
+			
+	.compare_drag &:not(&_drag)
+		pointer-events: none
+		
+	&__img-container
+		pointer-events: none
+	&__description
+		cursor: default
+
+.c-props
+	input:checked+.compare &_same
+		display: none
+	.compare_drag &
+		opacity: 0.4
+		pointer-events: none
+
+	&__title
+		display: inline-block
+		text-transform: uppercase
+		padding: 10px $c-padding
+		&:after
+			content: '\e800'
+			font-family: fontello
+			transform: rotate(180deg)
+			display: inline-block
+			padding: 0 0.5em
+			height: 24px
+			input:checked+.c-props &
+				transform: none
+
+	&__main
+		padding: $c-padding 0
+		border-top: 1px solid $color-grey
+		font-size: 0.9em
+		&:hover
+			background-color: $color-light
+		input:checked+.c-props &
+			display: none
+		input:checked+.compare &_same
+			display: none
+
+	&__name
+		margin: 0
+		padding: $c-padding $c-padding 0
+		color: $color-base
+		text-transform: uppercase
+		font-size: 0.7em
+
+	&__item
+		display: flex
+
+.c-prop
+	padding: $c-padding
+	&__empty
+		color: $color-grey

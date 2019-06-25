@@ -1,0 +1,21 @@
+//Кнопка добавления (в сравнение, избранное и т.д.)
+.shopadd
+	display: block
+	margin-bottom: 10px
+	padding: 0.2em 0.4em
+	font-size: 0.8rem
+	background-color: $color-light
+	color: $color-base
+	cursor: pointer
+	&_compare:before
+		content: '\2630  Сравнить'
+	&_favorite:before
+		content: '\2661  В избранное'
+
+	&_current
+		color: $color-red
+	&_current.shopadd
+		&_compare:before
+			content: '\2630  Не сравнивать'
+		&_favorite:before
+			content: '\2661  Убрать из избранного'	

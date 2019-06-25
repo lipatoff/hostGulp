@@ -1,0 +1,34 @@
+//Шапка
+.header
+	&__container
+		padding-top: 15px
+		padding-bottom: 15px
+
+	&__figure
+		text-align: center
+		font-size: 0
+
+	+media($header)
+		&__container
+			+flex-min
+			align-items: center
+
+//Селекторы
+header
+	p
+		margin: 0
+
+//Расположение логотипа по центру
+.header
+	+media($logo)
+		&__container
+			position: relative
+			display: block
+		&__figure
+			position: absolute
+			left: 50%
+			top: 50%
+			transform: translate(-50%,-50%)
+		&__main
+			+flex-min
+			align-items: center

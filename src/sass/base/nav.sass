@@ -1,0 +1,135 @@
+//.nav_scroll - прилепить nav к верху окна при прокрутке
+
+//Верхнее меню
+.nav
+	position: fixed
+	top: 0
+	z-index: 998
+	height: $nav-height
+	color: $color-nav_text
+	font-size: $font-size
+
+	@if $nav_animate==right
+		right: 0
+	@else
+		left: 0
+
+	//Меню
+	&__menu
+		+fixed
+		display: none
+		overflow-y: auto
+		z-index: 9998
+		background-color: $color-nav
+		text-align: center
+		+media-min($nav)
+			input:checked~&
+				display: block
+
+	+media($nav)
+		position: static
+		background-color: $color-nav
+		@if $nav_animate==right
+			left: 0
+		@else
+			right: 0
+
+		&_scroll
+			position: relative
+			position: -webkit-sticky
+			position: sticky
+			&_fixed
+				position: fixed
+				&+*
+					margin-top: $nav-height
+
+		&_show
+			transition: transform 0.3s
+			&_hide
+				transform: translateY(-100%)
+				+hover
+					&:hover
+						transform: none
+
+		&__menu
+			text-align: left
+			+flex-min
+			position: static
+			margin: 0 -#{$padding}
+			padding: 0
+			transform: none
+			transition: none
+			overflow: visible
+
+
+//Мобильное меню. Варианты появления
+.nav__menu
+	@if $nav_animate==left or $nav_animate==right	
+		display: unset
+		will-change: transform
+		min-width: 250px
+		max-width: 320px
+		transition: transform $animate_speed
+		@if $nav_animate==left
+			left: 0
+			transform: translate(-100%, $ios-y)
+		@else
+			right: 0
+			transform: translate(100%, $ios-y)
+		input:checked~&
+			transform: translate(0, $ios-y)
+
+		+media-min($nav)
+			input:checked~&
+				display: unset
+
+		+media($nav)
+			max-width: none
+			input:checked~&
+				transform: none
+	@else
+		left: 0
+		right: 0
+
+
+//Мобильное меню. Анимация появления пунктов меню
+@if $submenu_animate==1
+	+media-min($nav)
+		.nav__menu .menu__item
+			animation: nav1 0.7s
+	@keyframes nav1
+		0%
+			opacity: 0
+			transform: translateX(-50px)
+
+@else if $submenu_animate==2 //Разобраться с этим
+	.menu
+		&__button_open
+			position: absolute
+			right: 10px
+			input:checked+&
+				transform: none
+		&__fa
+			transform: rotate(270deg)
+			display: inline-block
+			&_close
+				transform: rotate(90deg)
+		&__submenu
+			position: absolute
+			z-index: 10
+
+		+media-min($nav)
+			&__submenu
+				display: block
+				left: 100%
+				top: 0
+				bottom: -$ios-y
+				width: 100%
+				transition: left 0.3s
+
+			input:checked~&__submenu
+				left: 0
+
+@if $submenu_animate!=2
+	.menu__button_close
+		display: none

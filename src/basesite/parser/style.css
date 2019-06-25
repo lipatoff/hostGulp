@@ -1,0 +1,125 @@
+body{
+	padding-bottom: 2em;
+}
+
+.hide{
+	display: none;
+}
+
+hr{
+    margin: 40px 0;
+	
+}
+
+.button{
+    text-transform: uppercase;
+    padding: 0.6em 1.1em 0.5em;
+    background: #018a45;
+    -webkit-appearance: none;
+    border: 0;
+    cursor: pointer;
+    color: #fff;
+    font-size: 17px;
+}
+.button_two{
+	background: #8a012c;
+	margin-top: 30px;
+}
+
+.items__li{
+	margin-top: 1em;
+}
+.item__on{
+	opacity: 0;
+	position: absolute;
+	margin: 5px 0 0 -20px;
+}
+.item:hover .item__on{
+	opacity: 1;
+}
+
+.item__link{
+	color: #333;
+	text-decoration: none;
+	line-height: 23px;
+}
+.item__link:hover{
+	color: blue;
+	text-decoration: underline;
+}
+.item__on:not(:checked)~.item__link{
+	opacity: 0.3;
+}
+.item__small{
+	color: #888;
+}
+.item:hover>.item__pid, .item__pid:focus, .item__pid_notempty{
+	opacity: 0.5;
+}
+
+.item__meta{
+	font-size: 0.8em;
+	color: #888;
+	opacity: 0.5;
+}
+.item:hover>.item__meta
+{
+	opacity: 1;
+}
+
+.item__meta p{
+	margin: 0;
+}
+
+.edit{
+	display: inline-block;
+	margin-left: 5px;
+}
+.edit__open{
+	display: none;
+}
+.edit__pid{
+	width: 50px;
+}
+
+.edit__icon{
+	display: none;
+	color: blue;
+	cursor: pointer;
+	opacity: 0.5;
+}
+.edit__icon:hover{
+	opacity: 1;
+}
+
+input:checked+.edit .edit__open, .item:hover input:not(:checked)+.edit .edit__icon{
+	display: inline;
+}
+
+table{
+	border-collapse: collapse;
+	border-spacing: 0;
+	font-size: 10px
+}
+td,th{
+	border: 1px solid;
+	padding: 2px 5px;
+}
+.tableimg{
+	position: relative;
+	width: 50px;
+	height: 50px;
+}
+.tableimg img{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.tableimg:hover img{
+	width: auto;
+	height: auto;
+	z-index: 9;
+}

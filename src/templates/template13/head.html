@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+	<title><?php echo $og_title ?></title>
+	<meta name="description" content="<?php echo $og_description ?>"/>
+	<meta name="keywords" content="<?php echo $og_keywords ?>"/>
+	<meta content="text/html; charset=<?php echo SITE_CODING?>" http-equiv="Content-Type"/>
+	<?php 
+		if (!$bNoindex)
+		{ 
+			?>
+			<meta property="og:url" content="<?php echo $canonical?>"/>
+			<meta property="og:type" content="website"/>
+			<meta property="og:title" content="<?php echo $og_title ?>"/>
+			<meta property="og:description" content="<?php echo $og_description ?>"/>
+			<meta property="og:image" content="<?php echo $Site.$og_image ?>"/>
+			<?php
+		} 
+		echo $canoindex;
+		if (Core_Registry::instance()->get('headPagination')) echo Core_Registry::instance()->get('headPagination');
+	?>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no, viewport-fit=cover"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="apple-mobile-web-app-capable" content="yes">
+<!--<Deject>-->
+	<link rel="shortcut icon" href="/images/icons/favicon-16x16.png" type="image/png"/>
+	<meta name="theme-color" content="@@include('color-base.txt')"/>
+	<link rel="apple-touch-icon" sizes="76x76" href="/images/icons/apple-touch-icon-76x76.png"/>
+	<link rel="apple-touch-icon" sizes="120x120" href="/images/icons/apple-touch-icon-120x120.png"/>
+	<link rel="apple-touch-icon" sizes="152x152" href="/images/icons/apple-touch-icon-152x152.png"/>
+	<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/apple-touch-icon-180x180.png"/>
+	<meta name="yandex-tableau-widget" content="logo=/images/icons/yandex-browser-50x50.png, color=@@include('color-base.txt')"/>
+<!--</Deject>-->
+	
+	<?php /* <link rel='dns-prefetch' href='https://yastatic.net'> */ ?>
+
+	<style>body{opacity:0}</style>
+	<?php $css_ver=filemtime('./css/style.css'); //Версия css ?>
+<!--<Deject>-->
+	<?php
+		if (!isset($_COOKIE["cssload"]) || $_COOKIE["cssload"]!=$css_ver){ // inline css
+			echo '<style>';
+			if ($pageSpeed) {include('css/style.css');include('css/libs.min.css');}
+			elseif ($homePage && file_exists('./css/critical/home.css')) include('css/critical/home.css'); 
+			elseif (file_exists('./css/critical/all.css')) include('css/critical/all.css');
+			echo '</style>';
+			setcookie("cssload", $css_ver);
+		}
+	?>
+<!--</Deject>-->
+	<?php if (!$pageSpeed) { ?>
+<!--<Deject>-->
+		<script>
+			function loadStorage(a,b,c,d){function e(){if(!window.FontFace)return!1;var a=new FontFace("t",'url("data:application/font-woff2,") format("woff2")',{}),b=a.load();try{b.then(null,function(){})}catch(c){}return"loading"===a.status}var f=navigator.userAgent,g=!window.addEventListener||f.match(/(Android (4.0|4.1|4.2|4.3))|(Opera (Mini|Mobi))/)&&!f.match(/Chrome/);if(!g){var h={};try{h=localStorage||{}}catch(i){}var j="l-"+a,k=j+"_url",l=j+"_css",m=h[k],n=h[l],o=document.createElement("style"),r=document.querySelector('html');if(o.rel="stylesheet",document.head.appendChild(o),!n||m!==b&&m!==c){var p=c&&e()?c:b,q=new XMLHttpRequest;q.open("GET",p),q.onload=function(){q.status>=200&&q.status<400&&(h[k]=p,h[l]=q.responseText,d||(o.textContent=q.responseText))&&r.classList.add('load'+a)},q.send()}else{o.textContent=n;r.classList.add('load'+a)}}}
+
+				if (typeof(CSS) !== "undefined") {loadStorage('fonts', '/fonts/fonts_woff2.css');}
+											else {loadStorage('fonts', '/fonts/fonts_woff.css');}
+				loadStorage("style", "/css/style.css?<?=$css_ver?>");
+		</script>
+		<noscript>
+<!--</Deject>-->
+			<link rel="stylesheet" href="/fonts/fonts_woff2.css?2" /><link rel="stylesheet" href="/css/style.css?<?=$css_ver?>" />
+<!--<Deject>-->
+		</noscript>
+<!--</Deject>-->
+	<?php } ?>
+</head>

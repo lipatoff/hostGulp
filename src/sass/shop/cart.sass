@@ -1,0 +1,61 @@
+//Корзина
+.cart
+	&__img
+		max-width: 125px
+
+.cart-item
+	&_postpone, &_not
+		opacity: 0.5
+	&__info
+		display: flex
+	&__img-container
+		flex-shrink: 0
+		width: 70px
+		margin-right: 10px
+
+//Корзина краткая
+.little-cart
+	&__items
+	&__total
+		font-size: 1.3em
+	&__button
+
+$lcart-width-del: 25px
+.lcart
+	position: relative
+	margin-bottom: 20px
+	padding-right: $lcart-width-del + 10
+	&__info
+		display: flex
+		width: 300px
+	&__img
+	&__img-container
+		position: relative
+		flex-shrink: 0
+		width: 100px
+	&__count
+		position: absolute
+		right: 0
+		top: 0
+		background-color: $color-light
+		border-radius: 50%
+		text-align: center
+		width: 25px
+		height: 25px
+		line-height: 25px
+	&__text
+		padding-left: 5px
+	&__name
+		font-size: 1.1em
+		margin-bottom: 5px
+	&__price
+		margin: 0
+	&__del
+		position: absolute
+		right: 0
+		top: 0
+		width: $lcart-width-del
+		height: $lcart-width-del
+		line-height: $lcart-width-del
+		margin: 0
+		padding: 0

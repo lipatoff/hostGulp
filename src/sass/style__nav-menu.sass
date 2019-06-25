@@ -1,0 +1,58 @@
+/*МЕНЮ*/ 
+@import 'base/menu'
+.menu
+	&__link
+		&_active, &:focus
+			background-color: $color-two
+		+hover
+			&:hover
+				background-color: $color-two
+
+/*ВЕРХНЕЕ МЕНЮ*/
+@import 'base/nav'
+
+
+/*КНОПКА БУРГЕР*/
+@import 'base/burger'
+
+
+/*Дополнительное меню*/
+.navother
+	position: fixed
+	z-index: 1000
+	bottom: 0
+	left: 0
+	right: 0
+	padding: 10px
+	background-color: #fff
+
+	+media($m)
+		top: 0
+		bottom: auto
+		left: auto
+		padding: 0
+		margin: 10px
+		background: none
+
+.omenu
+	display: flex
+	list-style: none
+	text-align: center
+	&__item
+		flex-grow: 1
+		margin-bottom: 5px
+		padding-left: 10px
+	&__link
+		display: block
+		background-color: $color-light
+		border: 1px solid $color-grey
+		line-height: 40px
+	&__main
+		top: 0
+		right: 45px
+
+	+media($m)
+		display: block
+		&__item
+			width: 50px
+			padding-left: 10px

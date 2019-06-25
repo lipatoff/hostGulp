@@ -1,0 +1,23 @@
+<article>
+<div class="container">
+	<?php
+	$Structure_Controller_Breadcrumbs = new Structure_Controller_Breadcrumbs( Core_Entity::factory('Site', CURRENT_SITE) );
+	$Structure_Controller_Breadcrumbs
+		->xsl('ХлебныеКрошки')
+		->show();
+
+	$structure_id = CURRENT_STRUCTURE_ID;
+	$oStructure = Core_Entity::factory('Structure', $structure_id);
+	if ($oStructure->document_id){ 
+		$oDocument = $oStructure->Document;
+		echo '<h1>' . htmlspecialchars($oDocument->name) . '</h1>';
+	}
+$a=microtime(true);
+	Core_Page::instance()->execute();
+$a=round(microtime(true)-$a, 5);
+echo '<div style="z-index:9999999;background-color:black;color:#fff;position: fixed;top: 26px;left: 0;">'.$a.'</div>';
+
+
+	?>
+</div>
+</article>

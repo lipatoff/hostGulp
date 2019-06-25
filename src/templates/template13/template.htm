@@ -1,0 +1,168 @@
+@@@include('before.php')
+@@@include('head.html')
+
+<body class="js-no" itemscope="" itemtype="http://schema.org/WebPage">
+<script>var b=document.querySelector('body');b.classList.add('js-yes'<?php /*,'body_animation'*/ ?>);b.classList.remove('js-no');</script>
+
+<header class="header">
+<div class="container header__container">
+	<figure class="header__figure" itemscope="" itemtype="http://schema.org/Organization">
+		<?php if (!$homePage) { ?><a href="/"><?php } ?>
+			<img class="header__img" src="/images/logo.png" alt="Логотип" itemprop="logo"/>
+		<?php if (!$homePage) { ?></a><?php } ?>
+		<meta itemprop="url" content="<?php echo $Site ?>"/>
+	</figure>
+
+	<div class="header__main">
+		<div>
+			Описание сайта
+		</div>
+
+		<div class="contacts header__contacts">
+			<?php $oPhone1->execute(); /*Телефон*/ ?>	
+			<label for="zvonok" class="button">Обратный звонок</label>
+		</div>
+	</div>
+</div>
+</header>
+
+<nav class="nav nav_scroll nav_show">
+<div class="container nav__container">
+	<input type="checkbox" id="showmenu"/>	
+	<label for="showmenu" class="burger">
+		<span class="burger__line"></span>
+		<span class="burger__line"></span>
+		<span class="burger__line"></span>
+	</label>
+	<?php // Верхнее меню
+		$Structure_Controller_Show = new Structure_Controller_Show(Core_Entity::factory('Site', CURRENT_SITE));
+		$Structure_Controller_Show->structure()->queryBuilder()->where('show', '=', 1);
+
+		//Добавляем ИС
+			Core_Utils::menuAddItems($Structure_Controller_Show, FALSE, 19); //Услуги
+			Core_Utils::menuAddItems($Structure_Controller_Show, TRUE); //ИМ
+
+			//$Structure_Controller_Show->addEntity(Core::factory('Core_Xml_Entity')->name('uri')->value(str_replace('?' . $_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI'])));
+
+			if (Core_Registry::instance()->get('current_informationsystem_id'))
+			{
+				$Structure_Controller_Show->addEntity(Core::factory('Core_Xml_Entity')->name('current_informationsystem_id')->value(Core_Registry::instance()->get('current_informationsystem_id')));
+			}
+
+		$Structure_Controller_Show->addEntity(Core::factory('Core_Xml_Entity')->name('bem_mod')->value('nav'));
+
+		$Structure_Controller_Show
+			->xsl('МногоуровневоеМеню')
+			->forbiddenTags(array('seo_title','seo_description','seo_keywords','document_id','type','path','template_id','priority','dir','active'))
+			->menu('3')
+			->show();
+	?>
+</div>
+</nav>
+
+<?php //Слайдер на главной
+	if ($homePage)
+	{
+		$Informationsystem_Controller_Show = new Informationsystem_Controller_Show(Core_Entity::factory('Informationsystem', 18));
+		$Informationsystem_Controller_Show
+			->xsl('СлайдерГлавная')
+			->itemsProperties(true)
+			->itemsPropertiesList(false)
+			->show();
+	}
+?>
+
+<main>
+	<?php Core_Page::instance()->execute(); ?>
+</main>
+
+<footer class="footer">
+<div class="container footer__container">
+	<?php // Нижнее меню
+		$Structure_Controller_Show->addEntity(Core::factory('Core_Xml_Entity')->name('bem_mod')->value('footer'));
+		$Structure_Controller_Show->level(0)->show();
+	?>			
+	<div class="footer__info">
+		<?php $oPhone1->execute(); /*Телефон*/ ?>
+		<p>&copy; <?php echo date('Y');?>&nbsp;Название фирмы</p>
+		<a class="footer__reg" href="/upload/files/pravila.pdf" target="_blank">Политика компании в отношении обработки персональных данных</a>
+		<a class="footer__seo" href="https://www.seo-eng.ru" target="_blank">Cоздание и продвижение сайтов</a>
+	</div> 
+</div>
+</footer>
+
+<div class="navother">
+	<?php 
+	// Меню ИМ
+		$Structure_Controller_Show = new Structure_Controller_Show(Core_Entity::factory('Site', CURRENT_SITE));
+		$Structure_Controller_Show->structure()->queryBuilder()->where('show', '=', 1);
+
+		//Добавляем кол-во
+			Core_Utils::shopCountMenu($Structure_Controller_Show, 'cart', 3);	//Корзина
+			Core_Utils::sessionCountMenu($Structure_Controller_Show, 'hostcmsCompare', 'compare', 3);	//Сравнение
+			Core_Utils::sessionCountMenu($Structure_Controller_Show, 'hostcmsFavorite', 'favorite', 3);	//Избранное
+
+		//Добавляем краткую корзину
+			if (!Core_Registry::instance()->get('cart'))
+			{
+				ob_start();
+
+				$Shop_Cart_Controller_Show = new Shop_Cart_Controller_Show(Core_Entity::factory('Shop',3));
+
+				$Shop_Cart_Controller_Show->addEntity(Core::factory('Core_Xml_Entity')->name('base')->value(true));
+
+				$Shop_Cart_Controller_Show
+					->xsl('МагазинКорзинаКраткая')
+					->couponText(isset($_SESSION) ? Core_Array::get($_SESSION, 'coupon_text') : NULL)
+					->itemsPropertiesList(FALSE)
+					->show();
+
+				$little_cart = ob_get_contents(); ob_end_clean();
+
+				$Structure_Controller_Show->addEntity(
+                	Core::factory('Core_Xml_Entity')->name('little_main')
+                    	->addAttribute('name', 'cart')->value($little_cart)
+                );
+
+				//Кол-во
+				/*
+				$count = $Shop_Cart_Controller_Show->quantity;
+		        $count > 0 && $Structure_Controller_Show->addEntity(
+		            Core::factory('Core_Xml_Entity')->name('little_count')
+		                ->addAttribute('name', 'cart')->value($count)
+		            );
+		        */       
+			}
+
+		$Structure_Controller_Show
+			->forbiddenTags(array('seo_title','seo_description','seo_keywords','document_id','type','template_id','priority','dir','active'))
+			->xsl('ДополнительноеМеню')
+			->menu('4')
+			->parentId(101)
+			->show();
+	?>
+</div>
+
+<?php
+// Меню личного кабинета
+	if (Core::moduleIsActive('siteuser'))
+	{
+		$Structure_Controller_Show = new Structure_Controller_Show(Core_Entity::factory('Site', CURRENT_SITE));
+		$Structure_Controller_Show->structure()->queryBuilder()->where('show', '=', 1);
+		
+		//ID пользователя
+			$oSiteuser = Core_Entity::factory('Siteuser')->getCurrent();
+			$siteuser_id = $oSiteuser ? $oSiteuser->id : 0;
+			$Structure_Controller_Show->addEntity(Core::factory('Core_Xml_Entity')->name('siteuser_id')->value($siteuser_id));	
+
+		$Structure_Controller_Show
+			->xsl('МногоуровневоеМенюПользователя')
+			->forbiddenTags(array('seo_title','seo_description','seo_keywords','document_id','type','path','template_id','priority','dir','active'))
+			->showProperties(true)
+			->menu('5')
+			->show();
+	}
+?>
+
+@@@include('foot.html')
+@@@include('after.php')

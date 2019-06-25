@@ -1,0 +1,289 @@
+.val
+	display: none
+	overflow: hidden
+	position: fixed
+	background-color: #fff
+	top: 0
+	left: 0
+	right: 0
+	height: 100vh
+	z-index: 9994
+	&_1
+		z-index: 9995
+	&_2
+		z-index: 9996
+	&_3
+		z-index: 9997
+	input:checked+&
+		display: block
+
+	&__pam
+		position: absolute
+		left: 60vw
+		top: 20vh
+		margin: -30px 0 0 -30px
+		opacity: 0
+
+.label
+	position: fixed
+	background-color: #fff
+	bottom: 0
+	left: 0
+	right: 0
+	line-height: 100px
+	text-align: center
+	background: #277572
+	color: #fff
+	z-index: 9999
+	font-size: 28px
+	text-transform: uppercase
+		
+@keyframes showl
+	0%, 98%
+		bottom: -150px
+		opacity: 0
+		pointer-events: none
+
+$size: 40vmin
+$color: #d81839
+$color2: #9376a4
+.heart
+	position: absolute
+	left: 50%
+	top: 45%
+	margin: -20vmin 0 0 -20vmin
+	background: $color
+	border-radius: 0 0 5% 0
+	width: $size
+	height: $size
+	transform: rotate(405deg)
+	
+	&:before, &:after
+		content: ''
+		position: absolute
+		top: 0
+		left: 0
+		width: $size
+		height: $size
+		background: $color
+	&:before
+		top: -$size/2
+		border-radius: 50% 50% 0 0
+	&:after
+		left: -$size/2
+		border-radius: 50% 0 0 50%
+	&__back
+		position: absolute
+		left: 0
+		top: 0
+		bottom: 0
+		right: 0
+		border-radius: 0 0 5% 0
+
+/*--------------------------------------*/
+$time: 5s
+.val_1
+	.heart
+		border-radius: 50%
+		transform: scale(0.1)
+		animation: heart1 $time
+		&:before, &:after
+			display: none
+
+	.val__pam
+		animation: pam1 $time
+
+	.label
+		animation: showl $time+2
+
+@keyframes heart1
+	0%
+		top: 100vh
+		left: 30vw
+	5%
+		left: 95vw
+		top: 60vh
+	10%
+		left: 5vw
+		top: 50vh
+	15%
+		left: 60vw
+		top: 5vh
+	20%
+		left: 95vw
+		top: 30vh
+	25%
+		left: 5vw
+		top: 40vh
+	30%
+		left: 95vw
+		top: 80vh
+	35%
+		left: 5vw
+		top: 10vh
+	40%, 60%
+		left: 60vw
+		top: 20vh
+	65%
+		left: 5vw
+		top: 50vh
+	70%
+		left: 95vw
+		top: 60vh
+	75%
+		left: 5vw
+		top: 90vh
+	80%
+		left: 95vw
+		top: 75vh
+	85%
+		left: 3vw
+		top: 5vh
+	90%
+		left: 5vw
+		top: 30vh
+
+@keyframes pam1
+	0%, 44%, 61%
+		opacity: 0
+	45%, 60%
+		opacity: 1
+
+/*--------------------------------------*/
+$time: 4s
+.val_2 
+	.heart
+		animation: heart2 $time
+		&:before
+			animation: before2 $time
+		&:after
+			animation: after2 $time
+
+	.label
+		animation: showl $time+2		
+
+@keyframes heart2
+	0%
+		transform: scale(0.1)
+		border-radius: 50%
+	25%
+		border-radius: 50%
+		transform: rotate(-135deg)
+	75%
+		transform: rotate(45deg)
+		border-radius: 0
+	92%
+		transform: rotate(405deg) scale(0.8)
+		border-radius: 30%
+	95%
+		border-radius: 15%
+	100%
+		border-radius: 0 0 5% 0
+		transform: rotate(405deg)
+
+@keyframes before2
+	0%
+		height: 0
+	92%
+		height: 0
+		top: 30%
+	100%
+		height: $size
+		top: -$size/2
+
+@keyframes after2
+	0%
+		width: 0
+	92%
+		width: 0
+		left: 30% 
+	100%
+		width: $size
+		left: -$size/2
+
+
+/*--------------------------------------*/
+$time: 1.4s
+.val_3
+	.heart
+		animation: heart3 0.6s 1.6s infinite
+		&:before
+			animation: before3 $time
+		&:after
+			animation: after3 $time
+		&__back
+			animation: back3 $time
+
+	.label_error
+		animation: showl 4s
+	.label_bingo
+		animation: showl 10s
+
+
+@keyframes before3
+	7%, 28%, 49%, 63%, 84%
+		z-index: 1
+		background-color: $color
+	14%, 35%, 49%, 70%
+		z-index: 9
+		background-color: $color2
+
+@keyframes after3
+	0%, 21%, 42%, 70%, 91%
+		z-index: 1
+		background-color: $color
+	7%, 28%, 56%, 77%
+		z-index: 9
+		background-color: $color2
+
+@keyframes back3
+	14%, 35%, 56%, 77%, 98%
+		z-index: 1
+		background-color: $color
+	21%, 42%, 63%, 84%
+		z-index: 9
+		background-color: $color2
+
+@keyframes heart3
+	0%, 100%
+		transform: rotate(405deg)
+	60%
+		transform: rotate(405deg) scale(0.88)
+	84%, 88%
+		transform: rotate(405deg) scale(0.95)
+
+
+/*--------------------------------------*/
+.text
+	display: none
+	position: fixed
+	background-color: rgba(#fff,0.8)
+	top: 0
+	left: 0
+	right: 0
+	height: 100vh
+	z-index: 10000
+
+	flex-direction: column
+	justify-content: center
+	text-align: center
+	padding: 10vmin
+	font-size: 27px
+	color: #b13505
+
+	&_error
+		background-color: red
+		color: #fff
+	input:checked+&
+		display: flex		
+
+
+	&__title
+		font-size: 1.2em
+		text-transform: uppercase
+	&__small
+		font-size: 0.6em
+		color: #656565
+		margin: 14px
+	&_error &__small
+		color: #b7b7b7

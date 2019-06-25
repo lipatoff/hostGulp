@@ -1,0 +1,78 @@
+//Волнистая линия
+=wave($x: 32)
+	$y: $x/6.4
+	background: radial-gradient(circle at $x/2*1px $y*-1px,transparent $y*2-1px,currentColor $y*2px,currentColor $y*2+1px,transparent $y*2+2px) 0 $y*1px #{/$x}px $y*3px repeat-x, radial-gradient(circle at $x/2*1px $y*4px,transparent $y*2-2px,currentColor $y*2-1px,currentColor $y*2px,transparent $y*2+1px) $x/2*1px $x/4*-1px  #{/$x}px $y*3px repeat-x
+=wave-top($x: 32)
+	$y: $x/6.4
+	background: radial-gradient(circle at $x/2*1px $y*-1px,currentColor $y*2px,transparent $y*2+1px) 0 $y*1px #{/$x}px $y*3px repeat-x, radial-gradient(circle at $x/2*1px $y*4px,transparent $y*2-1px,currentColor $y*2px) $x/2*1px $x/4*-1px #{/$x}px $y*3px repeat-x
+=wave-bottom($x: 32)
+	$y: $x/6.4
+	background: radial-gradient(circle at $x/2*1px $y*-1px,transparent $y*2px,currentColor $y*2+1px) 0 $y*1px #{/$x}px $y*3px repeat-x, radial-gradient(circle at $x/2*1px $y*4px,currentColor $y*2-1px,transparent $y*2px) $x/2*1px $x/4*-1px #{/$x}px $y*3px repeat-x
+
+
+//Слайдерна главной
+.slider
+	color: #fff
+	&__item
+		background: center/cover no-repeat
+		width: 100%
+		height: 70vh
+		max-height: 500px
+		image-rendering: -webkit-optimize-contrast
+	.owl
+		&-pagination
+			position: absolute
+			bottom: 0
+
+//Отзывы
+.rev
+	width: 400px
+
+//Плюсы
+$why-img: 66px
+.why
+	+flex
+	text-align: center
+	&__item
+		position: relative
+		width: 200px
+		margin-bottom: $margin
+		&:before
+			content: ''
+			position: static
+			display: block
+			margin: 0 auto 20px
+			width: 140px
+			height: 140px
+			border-radius: 50%
+			box-shadow: 0 0 0 2px #fff
+			background: none
+		&:after
+			content: ''
+			position: absolute
+			top: 36px
+			left: 0
+			right: 0
+			height: $why-img
+			margin: 0
+			background: top no-repeat
+			+onload
+				background-image: url(/images/site/why.png)
+		@for $i from 2 through 4
+			&:nth-of-type(#{$i}):after
+				background-position-y: -$why-img*(-1+$i)
+
+//Блок картинок
+.imgblock
+	display: flex
+	flex-wrap: wrap
+	max-width: 500px
+	margin: auto
+	&__item
+		flex: 1 1 auto
+		padding: 1px
+	&__img
+		display: block
+		min-height: 100%
+		width: 100%
+		object-fit: cover

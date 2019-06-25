@@ -1,0 +1,39 @@
+@import '_settings'
+@import 'base/base'
+@import 'base/body'
+
+ul
+	margin: 0
+	padding: 0
+
+.hide
+	display: none
+
+.main
+	font-size: 1.4em
+	text-align: center
+
+.h1
+	color: $color-red
+	line-height: 50vh
+	.page404 &
+		font-size: 50vmin
+		margin-bottom: 7vmin		
+
+.menu
+	font-size: 0.7em
+	&__item
+		display: inline-block
+		margin: 5px
+		&:before
+			display: none
+	
+	&__link
+		color: #fff
+		background-color: $color-base
+		padding: 5px
+		&_home
+			background-color: $color-red
+
+.footer
+	text-align: center

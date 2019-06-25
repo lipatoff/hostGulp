@@ -1,0 +1,50 @@
+@import '../../../sass/_settings'
+
+.youtube
+	&__container
+		width: 100%
+		padding-bottom: 56%
+		position: relative
+		cursor: pointer
+		background: center/cover #000 no-repeat
+		&:before
+			content: ''
+			position: absolute
+			z-index: 1
+			background: url(/images/youtube/youtube.svg) center no-repeat
+			left: 0
+			right: 0
+			top: 0
+			bottom: 0
+			opacity: 0.6
+			transition: opacity 0.3s
+		+hover
+			&:hover
+				&:before
+					opacity: 1
+				.youtube
+					&__title
+						opacity: 0.5
+		&_open:before
+			background-image: url(/images/preloader.svg)
+
+	&__video
+		position: absolute
+		left: 0
+		width: 100%
+		height: 100%
+		z-index: 2
+
+	&__title
+		position: absolute
+		top: 0
+		left: 0
+		right: 0
+		height: 50%
+		padding: 10px 15px
+		font: 18px Roboto, Arial
+		text-align: left
+		color: #ddd
+		text-shadow: 0 0 4px #333
+		background-image: linear-gradient(to top, rgba(0,0,0,0), rgba(0,0,0,0.5))
+		transition: opacity 0.5s

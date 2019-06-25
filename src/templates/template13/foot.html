@@ -1,0 +1,93 @@
+<?php /* Модальное окно */ ?>
+<input class="hide modal-check" type="checkbox" id="zvonok"/>	
+<div class="modal form-container" data-form="form1">
+	<label class="modal__back" for="zvonok"></label>
+</div>
+<?php /* /Модальное окно */ ?>
+
+<?php 
+	/*Сравнение товаров*/
+	/*
+	if ($_SERVER["REQUEST_URI"]!='/catalog/compare_items/'){ 
+		if (isset($_SESSION) && isset($_SESSION['hostcmsCompare']) && count($_SESSION['hostcmsCompare'][3])>2){ ?>
+			<a href="/catalog/compare_items/" class="compare-button" style="display:block">Сравнить <span class="compare-button__count"><?php echo count($_SESSION['hostcmsCompare'][3]); ?></span></a>
+		<?php }else{ ?>
+			<a href="/catalog/compare_items/" class="compare-button">Сравнить <span class="compare-button__count">0</span></a>
+		<?php }
+	} 
+	*/
+?>
+
+<?php if (!$pageSpeed) { ?>
+	<div class="re hide">
+		<p class="re__text">Продолжая использовать наш сайт, вы даете согласие на обработку файлов cookie, пользовательских данных (сведения о местоположении; тип и версия ОС; тип и версия Браузера; тип устройства и разрешение его экрана; источник откуда пришел на сайт пользователь; с какого сайта или по какой рекламе; язык ОС и Браузера; какие страницы открывает и на какие кнопки нажимает пользователь; ip-адрес) в целях функционирования сайта, проведения ретаргетинга и проведения статистических исследований и обзоров. Если вы не хотите, чтобы ваши данные обрабатывались, покиньте сайт.</p>
+		<p class="re__button">×</p>
+	</div>
+<?php } ?>
+
+<script><?php /*Согласие на обработку персональных данных в формах*/
+	ob_start();
+	$oDoc=Core_Entity::factory("Document", "15");
+	$oDoc->Document_Versions->getCurrent()->execute();
+	$form_assent = ob_get_contents(); ob_end_clean(); preg_match_all('!(<(?:code|pre|script).*>[^<]+</(?:code|pre|script)>)!',$form_assent,$pre); $form_assent = preg_replace('!<(?:code|pre).*>[^<]+</(?:code|pre)>!', '#pre#', $form_assent); $form_assent = preg_replace('#<!–[^\[].+–>#', '', $form_assent); $form_assent = preg_replace('/[\r\n\t]+/', ' ', $form_assent); $form_assent = preg_replace('/>[\s]+</', '><', $form_assent); $form_assent = preg_replace('/[\s]+/', ' ', $form_assent);if (!empty($pre[0])) {foreach ($pre[0] as $tag) {$form_assent = preg_replace('!#pre#!', $tag, $form_assent,1);}}$form_assent = preg_replace('/<!--(?!<!)[^\[>].*?-->/', '', $form_assent);
+?>var formAssent = '<?php echo $form_assent;?>';</script>
+
+<?php
+	/*Если пользователь авторизован*/
+	if (Core_Auth::logged() || $pageSpeed)
+	{
+		$userAuth = true;
+		?><script>var userAuth = true;</script><?php
+	}
+	else
+	{
+		$userAuth = false;
+	}
+
+/*Отключаем яндекс карты*/
+	if ($pageSpeed)
+	{
+		?><script>var pageSpeed = true;</script><?php
+	}
+
+if (!$userAuth)
+{
+/*СЮДА ВСТАВЛЯТЬ СКРИПТЫ АНАЛИТИКИ (Если пользователь НЕ авторизован)*/
+?>
+
+
+
+<?php
+}
+/*Если материал не опубликован*/
+if ($bNoactive)
+{
+	?><div class="no-js">Материал не опубликован</div><?php
+}
+?>
+
+<a href="http://www.hostcms.ru" class="hide">Система управления сайтом HostCMS</a>
+
+<?php if (!$pageSpeed) { ?>
+	<script src="<?=upcache('/js/before.js')?>" defer></script>
+	<?php /* <script src="https://yastatic.net/jquery/3.1.1/jquery.min.js" defer></script> */ ?>
+	<script src="<?=upcache('/js/libs.min.js')?>" defer></script>
+	<script src="<?=upcache('/js/script.js')?>" defer></script>
+	<!--<build>-->
+	<link rel="stylesheet" href="<?=upcache('/css/libs.min.css')?>" />
+	<!--<build>-->
+	<!--<Deject>-->
+	<script>loadStorage("libs", "<?=upcache('/css/libs.min.css')?>");</script>
+	<!--</Deject>-->
+
+	<noscript>
+		<style>.regulation{display: block;}</style>
+		<div class="no-js">ВНИМАНИЕ! Включите JavaScript для полноценной работы сайта, и возможности отправления заявок!</div>
+	</noscript>	
+<?php }else{ ?>
+	<script><?php include('js/before.js'); ?></script>
+<?php } ?>
+
+
+</body>
+</html>
